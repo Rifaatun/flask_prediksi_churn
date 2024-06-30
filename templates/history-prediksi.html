@@ -1,0 +1,124 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Prediksi /</span> History Prediksi</h4>
+
+              <!-- Basic Bootstrap Table -->
+                              <!-- Basic Layout & Basic with Icons -->
+              <section class="section">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                {% if message.startswith('ERROR:') %}
+                <div class="alert alert-danger alert-dismissible fade show mb-2" role="alert">
+                  {% else %}
+                  <div class="alert alert-success alert-dismissible fade show mb-2" role="alert">
+                    {% endif %}
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                  {% endfor %}
+                  {% endif %}
+                  {% endwith %}
+              
+                  <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Data History Prediksi</h5>
+                        <!-- Table with stripped rows -->
+                        <div class="table-responsive">
+                        <table id="myTable" class="table responsive nowrap table-bordered table-striped align-middle"
+                          style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>No</th>
+                              <th>Nama Pelanggan</th>
+                              <th>Service Type</th>
+                              <th>Packet Service</th>
+                              <th>Media Transmisi</th>
+                              <th>Bandwidth</th>
+                              <th>State</th>
+                              <th>Partner</th>
+                              <th>Contract</th>
+                              <th>Complaint</th>
+                              <th>Prediction</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for row in prediction_history %}
+                            <tr>
+                              <!--<td>{{loop.index}}</td>
+                              <td>{{row.}}</td>
+                              <td>{{ convertPA(row.2) }}</td>
+                              <td>{{ convertPA1(row.3) }}</td>
+                              <td>{{ convertSA(row.4) }}</td>
+                              <td>{{ convertPI(row.5) }}</td>
+                              <td>{{ convertPI1(row.6) }}</td>
+                              <td>{{ convertSI(row.7) }}</td>
+                              <td>{{ convertSI(row.8) }}</td>
+                              <td>{{ convertSI(row.9) }}</td>
+                              <td>{{ convertSI(row.10) }}</td> -->
+                              <td>{{loop.index}}</td>
+                              <td>{{row.nama}}</td>
+                              <td>{{row.Service_types}}</td>
+                              <td>{{ row.Packet_service }}</td>
+                              <td>{{ row.Media_transmisi }}</td>
+                              <td>{{ row.Bandwidth }}</td>
+                              <td>{{ row.State }}</td>
+                              <td>{{ row.Partner }}</td>
+                              <td>{{ row.Type_ontract }}</td>
+                              <td>{{ row.Complaint }}</td>
+                              <td>{{ row.Prediction }}</td>
+                              <td>
+                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus{{ loop.index }}">
+                                  <i class="bi bi-trash"></i> </button>
+                              </td>
+                            </tr>
+                            <!-- modal hapus -->
+                            <div class="modal fade" id="modalHapus{{ loop.index }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                              aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Delete Data Prediksi</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <form action="/deletedataprediksi/{{ row.0 }}" method="POST">
+                                    <div class="modal-body">
+                                      <div class="row">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <p class="fs-6">Apakah Anda Yakin Menghapus Data prediksi <b>{{row.1}}</b>?</p>
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                      <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- end modal hapus -->
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                        </div>
+                        <!-- End Table with stripped rows -->
+                        
+                      </div>
+                    </div>
+                  </div>
+              </section>
+              <!--/ Basic Bootstrap Table -->
+
+              <hr class="my-5" />
+
+            </div>
+            <!-- / Content -->
+{% endblock %}

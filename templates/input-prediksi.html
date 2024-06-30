@@ -1,0 +1,171 @@
+{% extends 'layout.html' %} {% block content %}
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+  <!-- Content -->
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for message in messages %}
+  {% if message.startswith('ERROR:') %}
+  <div class="alert alert-danger alert-dismissible fade show mb-2" role="alert">
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show mb-2" role="alert">
+      {% endif %}
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4">
+      <span class="text-muted fw-light">Prediksi/</span> Tes Prediksi
+    </h4>
+
+    <!-- Basic Layout & Basic with Icons -->
+    <div class="row">
+      <!-- Basic Layout -->
+      <div class="col-xxl">
+        <div class="card mb-4">
+          <div
+            class="card-header d-flex align-items-center justify-content-between"
+          >
+            <h5 class="mb-0">Tes Prediksi Churn</h5>
+            <small class="text-muted float-end">Default label</small>
+          </div>
+          <div class="card-body">
+            <form method="POST" action="{{ url_for('predict') }}"> <!--/prediksi-->
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="Nama"
+                  >Nama</label
+                >
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="Nama" name="Nama" placeholder="Nama Pelanggan" value="{% if 'Nama' in request.form %}{{ request.form['Nama'] }}{% endif %}">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="Service_types"
+                  >Service Types</label
+                >
+                <div class="col-sm-10">
+                  <select class="form-select" id="Service_types" name="Service_types">
+                    <option value="{% if 'Service_types' in request.form and request.form['Service_types'] == 'Corporate' %} selected {% endif %}">Corporate</option>
+                    <option value="{% if 'Service_types' in request.form and request.form['Service_types'] == 'Retail' %} selected {% endif %}">Retail</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="Packet_service"
+                  >Packet Service</label
+                >
+                <div class="col-sm-10">
+                  <select class="form-select" id="Packet_service" name="Packet_service">
+                    <option value=" {% if 'Packet_service' in request.form and request.form['Packet_service'] == 'Permana Home' %} selected {% endif %}">Permana Home</option>
+                    <option value="{% if 'Packet_service' in request.form and request.form['Packet_service'] == 'Permana Link' %} selected {% endif %}">Permana Link</option>
+                    <option value=" {% if 'Packet_service' in request.form and request.form['Packet_service'] == 'Permana Dedicated' %} selected {% endif %}">Permana Dedicated</option>
+                    <option value="{% if 'Packet_service' in request.form and request.form['Packet_service'] == 'Permana Hosta' %} selected {% endif %}">Permana Hosta</option>
+                    <option value=" {% if 'Packet_service' in request.form and request.form['Packet_service'] == 'Permana Colocation' %} selected {% endif %}">Permana Colocation</option>
+                    <option value=" {% if 'Packet_service' in request.form and request.form['Packet_service'] == 'Permana Metro' %} selected {% endif %}">Permana Metro</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="Media_transmisi"
+                  >Media Transmisi</label
+                >
+                <div class="col-sm-10">
+                  <select class="form-select" id="Media_transmisi" name="Media_transmisi">
+                    <option value="{% if 'Media_transmisi' in request.form and request.form['Media_transmisi'] == 'Wireless' %} selected {% endif %}">Wireless</option>
+                    <option value="{% if 'Media_transmisi' in request.form and request.form['Media_transmisi'] == 'Fiber Optic' %} selected {% endif %}">Fiber Optic</option>
+                    <option value="{% if 'Media_transmisi' in request.form and request.form['Media_transmisi'] == 'Ethernet' %} selected {% endif %}">Ethernet</option>
+                    <option value="{% if 'Media_transmisi' in request.form and request.form['Media_transmisi'] == 'Direct Kabel' %} selected {% endif %}">Direct Kabel</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="Bandwidth"
+                  >Bandwidth</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control" id="Bandwidth" name="Bandwidth" placeholder="Jumlah Bandwidth" value="{% if 'Bandwidth' in request.form %}{{ request.form['Bandwidth'] }}{% endif %}">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="State"
+                  >State</label
+                >
+                <div class="col-sm-10">
+                  <select class="form-select" id="State" name="State">
+                    <option value="{% if 'State' in request.form and request.form['State'] == 'Kepulauan Riau' %} selected {% endif %}">Kepulauan Riau</option>
+                    <option value="{% if 'State' in request.form and request.form['State'] == 'DKI Jakarta' %} selected {% endif %}">DKI Jakarta</option>
+                    <option value="{% if 'State' in request.form and request.form['State'] == 'Aceh' %} selected {% endif %}">Aceh</option>
+                    <option value=" {% if 'State' in request.form and request.form['State'] == 'Jawa Barat' %} selected {% endif %}">Jawa Barat</option>
+                    <option value="{% if 'State' in request.form and request.form['State'] == 'Jawa Tengah' %} selected {% endif %}">Jawa Tengah</option>
+                    <option value="{% if 'State' in request.form and request.form['State'] == 'Jakarta' %} selected {% endif %}">Jakarta</option>
+                    <option value=" {% if 'State' in request.form and request.form['State'] == 'Sumatera Utara' %} selected {% endif %}">Sumatera Utara</option>
+                    <option value=" {% if 'State' in request.form and request.form['State'] == 'Riau' %} selected {% endif %}">Riau</option>
+                    <option value=" {% if 'State' in request.form and request.form['State'] == 'Banten' %} selected {% endif %}">Banten</option>
+                    <option value=" {% if 'State' in request.form and request.form['State'] == 'Jawa Timur' %} selected {% endif %}">Jawa Timur</option>
+                    <option value=" {% if 'Kalimantan Timur' in request.form and request.form['State'] == 'Kalimantan Timur' %} selected {% endif %}">Kalimantan Timur</option>
+                    <option value=" {% if 'Kalimantan Barat' in request.form and request.form['State'] == 'Kalimantan Barat' %} selected {% endif %}">Kalimantan Barat</option>
+                    <option value="{% if 'Sulawesi Barat' in request.form and request.form['State'] == 'Sulawesi Barat' %} selected {% endif %}">Sulawesi Barat</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="Partner"
+                  >Partner</label
+                >
+                <div class="col-sm-10">
+                  <select class="form-select" id="Partner" name="Partner">
+                    <option value="{% if 'Partner' in request.form and request.form['Partner'] == 'Yes' %} selected {% endif %}">Yes</option>
+                    <option value="{% if 'Partner' in request.form and request.form['Partner'] == 'No' %} selected {% endif %}">No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="Type_contract"
+                  >Type_Contract</label
+                >
+                <div class="col-sm-10">
+                  <select class="form-select" id="Type_contract" name="Type_contract">
+                    <option value=" {% if 'Type_contract' in request.form and request.form['Type_contract'] == 'Monthly' %} selected {% endif %}">Monthly</option>
+                    <option value="{% if 'Type_contract' in request.form and request.form['Type_contract'] == 'Yearly' %} selected {% endif %}">Yearly</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="Complaint"
+                  >Complaint</label
+                >
+                <div class="col-sm-10">
+                  <select class="form-select" id="Complaint" name="Complaint">
+                    <option value="{% if 'Complaint' in request.form and request.form['Complaint'] == 'Yes' %} selected {% endif %}">Yes</option>
+                    <option value="{% if 'Complaint' in request.form and request.form['Complaint'] == 'No' %} selected {% endif %}">No</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row justify-content-end">
+                <div class="col-sm-10">
+                  <input type="submit" class="btn btn-primary" value="Predict">
+                  <!-- <button type="submit" class="btn btn-primary">Send</button> -->
+                </div>
+              </div>
+            </form>
+            
+          </div>
+          <div
+            class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">Hasil Prediksi Churn Adalah </h5>
+            {% if result %}
+            <h5 class="mb-0">{{ result }}</h5>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Content -->
+  {% endblock %}
+</div>
